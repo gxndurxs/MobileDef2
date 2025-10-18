@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "845661352857",
+    "project_id": "habit-tracker-ostrovskiy",
+    "storage_bucket": "habit-tracker-ostrovskiy.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845661352857:android:1809469c349a2cd1959908",
+        "android_client_info": {
+          "package_name": "ru.mirea.ostrovskiy.habittracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIZYPO_4xxVffA4ZqCbJ9lwbDVGOF-BOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
