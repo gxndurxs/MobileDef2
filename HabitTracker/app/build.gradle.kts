@@ -45,4 +45,7 @@ dependencies {
 
     implementation(project(":data"))
     implementation(project(":Domain"))
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.3")
+    implementation("androidx.activity:activity-ktx:1.9.0")
 }

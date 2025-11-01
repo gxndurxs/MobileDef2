@@ -17,3 +17,6 @@ rootProject.name = "HabitTracker"
 include(":app")
 include(":data")
 include(":Domain")
+include(":scrollviewapp")
+include(":listviewapp")
+include(":recyclerviewapp")

@@ -3,23 +3,21 @@ package ru.mirea.ostrovskiy.habittracker.data.database;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-// Аннотация @Entity говорит Room, что этот класс - это таблица в БД.
-// tableName = "habits" - это название нашей таблицы.
 @Entity(tableName = "habits")
 public class HabitEntity {
-    // @PrimaryKey говорит, что поле id - это уникальный ключ для каждой записи.
-    // autoGenerate = true - значит, что id будет присваиваться автоматически.
     @PrimaryKey(autoGenerate = true)
     public int id;
 
     public String name;
     public String description;
+    public String deadline;  // <-- ДОБАВЛЕНО
+    public int progress;     // <-- ДОБАВЛЕНО
 
-    // Пустой конструктор ОБЯЗАТЕЛЬНО нужен для Room.
-    public HabitEntity() {}
-
-    public HabitEntity(String name, String description) {
+    // Обновляем конструктор, чтобы он принимал все поля
+    public HabitEntity(String name, String description, String deadline, int progress) {
         this.name = name;
         this.description = description;
+        this.deadline = deadline;
+        this.progress = progress;
     }
 }

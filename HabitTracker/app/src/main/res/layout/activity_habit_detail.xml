@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HabitDetailActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewDetailName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:text="Название привычки" />
+
+    <TextView
+        android:id="@+id/textViewDetailDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@id/textViewDetailName"
+        app:layout_constraintStart_toStartOf="@id/textViewDetailName"
+        app:layout_constraintTop_toBottomOf="@id/textViewDetailName"
+        tools:text="Очень длинное и подробное описание того, что именно нужно делать в рамках этой привычки, чтобы достичь успеха." />
+
+    <TextView
+        android:id="@+id/textViewDetailDeadlineLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Срок выполнения:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/textViewDetailName"
+        app:layout_constraintTop_toBottomOf="@id/textViewDetailDescription" />
+
+    <TextView
+        android:id="@+id/textViewDetailDeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/textViewDetailDeadlineLabel"
+        app:layout_constraintStart_toEndOf="@id/textViewDetailDeadlineLabel"
+        app:layout_constraintTop_toTopOf="@id/textViewDetailDeadlineLabel"
+        tools:text="31.12.2025" />
+
+    <TextView
+        android:id="@+id/textViewProgressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Текущий прогресс:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/textViewDetailName"
+        app:layout_constraintTop_toBottomOf="@id/textViewDetailDeadlineLabel" />
+
+    <!-- НОВЫЙ TextView для отображения процентов -->
+    <TextView
+        android:id="@+id/textViewProgressValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/textViewProgressLabel"
+        app:layout_constraintStart_toEndOf="@id/textViewProgressLabel"
+        app:layout_constraintTop_toTopOf="@id/textViewProgressLabel"
+        tools:text="75%" />
+
+    <ProgressBar
+        android:id="@+id/progressBarDetail"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="8dp"
+        android:max="100"
+        app:layout_constraintEnd_toEndOf="@id/textViewDetailName"
+        app:layout_constraintStart_toStartOf="@id/textViewDetailName"
+        app:layout_constraintTop_toBottomOf="@id/textViewProgressLabel"
+        tools:progress="75" />
+
+    <!-- НОВЫЙ SeekBar (ползунок) для изменения прогресса -->
+    <SeekBar
+        android:id="@+id/seekBarProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:max="100"
+        app:layout_constraintEnd_toEndOf="@id/textViewDetailName"
+        app:layout_constraintStart_toStartOf="@id/textViewDetailName"
+        app:layout_constraintTop_toBottomOf="@id/progressBarDetail"
+        tools:progress="75" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,12 +35,13 @@ public class HabitRepositoryImpl implements HabitRepository {
     private final AppDatabase database;
     private final NetworkApi networkApi;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-
     private final WeatherApiService weatherApiService;
 
     public HabitRepositoryImpl(Context context) {
         this.sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+        // Добавляем .fallbackToDestructiveMigration(), чтобы избежать краша при изменении схемы БД
         this.database = Room.databaseBuilder(context, AppDatabase.class, "habit_database")
+                .fallbackToDestructiveMigration()
                 .build();
         this.networkApi = new NetworkApi();
 
@@ -51,16 +52,36 @@ public class HabitRepositoryImpl implements HabitRepository {
         this.weatherApiService = retrofit.create(WeatherApiService.class);
     }
 
-    // Этот метод мы не трогали, он остается как есть.
+    // ИСПРАВЛЕНО: Теперь передаем все данные в HabitEntity
     @Override
     public void addHabit(Habit habit) {
-        HabitEntity entity = new HabitEntity(habit.getName(), habit.getDescription());
+        HabitEntity entity = new HabitEntity(habit.getName(), habit.getDescription(), habit.getDeadline(), habit.getProgress());
         executor.execute(() -> {
             database.habitDao().insertHabit(entity);
         });
     }
 
-    // Эти методы мы тоже не трогали.
+    // ИСПРАВЛЕНО: Теперь передаем все данные в HabitEntity
+    @Override
+    public void updateHabit(Habit habit) {
+        HabitEntity entity = new HabitEntity(habit.getName(), habit.getDescription(), habit.getDeadline(), habit.getProgress());
+        entity.id = habit.getId();
+        executor.execute(() -> {
+            database.habitDao().updateHabit(entity);
+        });
+    }
+
+    // ИСПРАВЛЕНО: Теперь передаем все данные в HabitEntity
+    @Override
+    public void deleteHabit(Habit habit) {
+        HabitEntity entity = new HabitEntity(habit.getName(), habit.getDescription(), habit.getDeadline(), habit.getProgress());
+        entity.id = habit.getId();
+        executor.execute(() -> {
+            database.habitDao().deleteHabit(entity);
+        });
+    }
+
+
     @Override
     public void saveUserName(String name) {
         sharedPreferences.edit().putString("USER_NAME", name).apply();
@@ -73,13 +94,11 @@ public class HabitRepositoryImpl implements HabitRepository {
 
     @Override
     public void getWeather(String city, GetWeatherUseCase.WeatherCallback callback) {
-        // Сетевые запросы с Retrofit лучше делать асинхронно через .enqueue()
         weatherApiService.getWeather(city).enqueue(new Callback<WeatherResponse>() {
             @Override
             public void onResponse(@NonNull Call<WeatherResponse> call, @NonNull Response<WeatherResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     WeatherResponse weather = response.body();
-                    // Извлекаем нужные данные из сложной структуры
                     String temp = weather.getCurrentCondition().get(0).getTempC();
                     String desc = weather.getCurrentCondition().get(0).getWeatherDesc().get(0).getValue();
                     callback.onSuccess(temp, desc);
@@ -97,41 +116,31 @@ public class HabitRepositoryImpl implements HabitRepository {
 
     @Override
     public void getHabits(HabitCallback callback) {
-        Log.d(TAG, "getHabits called. Starting background executor...");
         executor.execute(() -> {
             try {
-                Log.d(TAG, "Executor: Now on background thread. Getting habits from DB...");
                 List<HabitEntity> entities = database.habitDao().getAllHabits();
-                Log.d(TAG, "Executor: Got " + (entities == null ? "null" : entities.size()) + " entities from DB.");
 
                 if (entities != null && !entities.isEmpty()) {
                     List<Habit> habits = new ArrayList<>();
                     for (HabitEntity entity : entities) {
-                        habits.add(new Habit(entity.id, entity.name, entity.description));
+                        // ИСПРАВЛЕНО: Теперь мы читаем НАСТОЯЩИЕ данные из базы, а не генерируем случайные
+                        habits.add(new Habit(entity.id, entity.name, entity.description, entity.deadline, entity.progress));
                     }
-                    Log.d(TAG, "Executor: DB is not empty. Returning habits to main thread...");
                     new Handler(Looper.getMainLooper()).post(() -> callback.onHabitsLoaded(habits));
                 } else {
-                    // ВОТ ГЛАВНОЕ ИЗМЕНЕНИЕ:
-                    // Мы вернули старую, простую логику.
-                    // Если база пуста, мы снова берем "привычки" из NetworkApi.
-                    Log.d(TAG, "Executor: DB is empty. Getting habits from NetworkApi...");
+                    // Логика для первого запуска, когда база пуста
                     List<Habit> habitsFromServer = networkApi.getHabitsFromServer();
-                    Log.d(TAG, "Executor: Got " + habitsFromServer.size() + " habits from Network.");
-
-                    // Сохраняем эти "привычки" в базу.
                     if (!habitsFromServer.isEmpty()) {
-                        Log.d(TAG, "Executor: Saving network habits to DB...");
                         for (Habit serverHabit : habitsFromServer) {
-                            HabitEntity entityToSave = new HabitEntity(serverHabit.getName(), serverHabit.getDescription());
+                            // Сохраняем "серверные" привычки в базу с их начальными данными
+                            HabitEntity entityToSave = new HabitEntity(serverHabit.getName(), serverHabit.getDescription(), serverHabit.getDeadline(), serverHabit.getProgress());
                             database.habitDao().insertHabit(entityToSave);
                         }
                     }
-                    Log.d(TAG, "Executor: Finished saving. Returning habits from network to main thread...");
+                    // Возвращаем эти же данные для отображения
                     new Handler(Looper.getMainLooper()).post(() -> callback.onHabitsLoaded(habitsFromServer));
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Executor: An error occurred in background thread!", e);
                 new Handler(Looper.getMainLooper()).post(() -> callback.onError(e.getMessage()));
             }
         });
