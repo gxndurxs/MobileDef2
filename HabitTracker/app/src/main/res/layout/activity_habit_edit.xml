@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context=".HabitEditActivity">
 
-    <!-- Toolbar для кнопки "Сохранить" -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarEdit"
         android:layout_width="match_parent"
@@ -25,7 +24,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Поле для ввода названия -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -40,7 +38,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Поле для ввода описания -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -58,7 +55,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Поле для ввода дедлайна -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"

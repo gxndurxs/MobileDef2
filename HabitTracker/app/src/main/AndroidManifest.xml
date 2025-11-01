@@ -19,7 +19,7 @@
             android:exported="false" />
         <activity
             android:name=".HabitDetailActivity"
-            android:exported="false" /> <!-- AuthActivity теперь СТАРТОВАЯ -->
+            android:exported="false" />
         <activity
             android:name=".AuthActivity"
             android:exported="true">
@@ -28,7 +28,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- MainActivity теперь обычная Activity -->
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false" />

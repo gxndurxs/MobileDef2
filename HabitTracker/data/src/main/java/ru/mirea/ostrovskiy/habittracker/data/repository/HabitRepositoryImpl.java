@@ -39,7 +39,6 @@ public class HabitRepositoryImpl implements HabitRepository {
 
     public HabitRepositoryImpl(Context context) {
         this.sharedPreferences = context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
-        // Добавляем .fallbackToDestructiveMigration(), чтобы избежать краша при изменении схемы БД
         this.database = Room.databaseBuilder(context, AppDatabase.class, "habit_database")
                 .fallbackToDestructiveMigration()
                 .build();
@@ -52,7 +51,6 @@ public class HabitRepositoryImpl implements HabitRepository {
         this.weatherApiService = retrofit.create(WeatherApiService.class);
     }
 
-    // ИСПРАВЛЕНО: Теперь передаем все данные в HabitEntity
     @Override
     public void addHabit(Habit habit) {
         HabitEntity entity = new HabitEntity(habit.getName(), habit.getDescription(), habit.getDeadline(), habit.getProgress());
@@ -61,7 +59,6 @@ public class HabitRepositoryImpl implements HabitRepository {
         });
     }
 
-    // ИСПРАВЛЕНО: Теперь передаем все данные в HabitEntity
     @Override
     public void updateHabit(Habit habit) {
         HabitEntity entity = new HabitEntity(habit.getName(), habit.getDescription(), habit.getDeadline(), habit.getProgress());
@@ -71,7 +68,6 @@ public class HabitRepositoryImpl implements HabitRepository {
         });
     }
 
-    // ИСПРАВЛЕНО: Теперь передаем все данные в HabitEntity
     @Override
     public void deleteHabit(Habit habit) {
         HabitEntity entity = new HabitEntity(habit.getName(), habit.getDescription(), habit.getDeadline(), habit.getProgress());
@@ -123,21 +119,17 @@ public class HabitRepositoryImpl implements HabitRepository {
                 if (entities != null && !entities.isEmpty()) {
                     List<Habit> habits = new ArrayList<>();
                     for (HabitEntity entity : entities) {
-                        // ИСПРАВЛЕНО: Теперь мы читаем НАСТОЯЩИЕ данные из базы, а не генерируем случайные
                         habits.add(new Habit(entity.id, entity.name, entity.description, entity.deadline, entity.progress));
                     }
                     new Handler(Looper.getMainLooper()).post(() -> callback.onHabitsLoaded(habits));
                 } else {
-                    // Логика для первого запуска, когда база пуста
                     List<Habit> habitsFromServer = networkApi.getHabitsFromServer();
                     if (!habitsFromServer.isEmpty()) {
                         for (Habit serverHabit : habitsFromServer) {
-                            // Сохраняем "серверные" привычки в базу с их начальными данными
                             HabitEntity entityToSave = new HabitEntity(serverHabit.getName(), serverHabit.getDescription(), serverHabit.getDeadline(), serverHabit.getProgress());
                             database.habitDao().insertHabit(entityToSave);
                         }
                     }
-                    // Возвращаем эти же данные для отображения
                     new Handler(Looper.getMainLooper()).post(() -> callback.onHabitsLoaded(habitsFromServer));
                 }
             } catch (Exception e) {

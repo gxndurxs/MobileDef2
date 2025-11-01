@@ -13,8 +13,8 @@ public interface HabitRepository {
 
     void getHabits(HabitCallback callback);
     void addHabit(Habit habit);
-    void updateHabit(Habit habit); // <-- НОВЫЙ МЕТОД
-    void deleteHabit(Habit habit); // <-- НОВЫЙ МЕТОД
+    void updateHabit(Habit habit);
+    void deleteHabit(Habit habit);
 
     void saveUserName(String name);
     String getUserName();

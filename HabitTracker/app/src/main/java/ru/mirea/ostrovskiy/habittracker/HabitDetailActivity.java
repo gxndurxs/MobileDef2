@@ -22,7 +22,6 @@ public class HabitDetailActivity extends AppCompatActivity {
     private HabitRepository habitRepository;
     private Habit currentHabit;
 
-    // --- Поля класса для View ---
     private TextView textProgressValue;
     private ProgressBar progressBar;
     private SeekBar seekBar;
@@ -44,7 +43,6 @@ public class HabitDetailActivity extends AppCompatActivity {
         TextView textDescription = findViewById(R.id.textViewDetailDescription);
         TextView textDeadline = findViewById(R.id.textViewDetailDeadline);
 
-        // --- ИСПРАВЛЕНО: Инициализируем View ИЗ ПОЛЕЙ КЛАССА, а не создаем новые ---
         progressBar = findViewById(R.id.progressBarDetail);
         textProgressValue = findViewById(R.id.textViewProgressValue);
         seekBar = findViewById(R.id.seekBarProgress);
@@ -63,7 +61,6 @@ public class HabitDetailActivity extends AppCompatActivity {
             textDescription.setText(currentHabit.getDescription());
             textDeadline.setText(currentHabit.getDeadline());
 
-            // --- ДОБАВЛЕНО: Устанавливаем начальные значения для прогресса через новый метод ---
             updateProgressViews(currentHabit.getProgress());
 
             if (getSupportActionBar() != null) {
@@ -71,18 +68,15 @@ public class HabitDetailActivity extends AppCompatActivity {
             }
         }
 
-        // --- ДОБАВЛЕНО: Устанавливаем слушатель для SeekBar ---
         setupSeekBarListener();
     }
 
-    // --- ДОБАВЛЕН НОВЫЙ МЕТОД: Обновляет все View, связанные с прогрессом ---
     private void updateProgressViews(int progress) {
         progressBar.setProgress(progress);
         seekBar.setProgress(progress);
         textProgressValue.setText(progress + "%");
     }
 
-    // --- ДОБАВЛЕН НОВЫЙ МЕТОД: Устанавливает слушатель для SeekBar ---
     private void setupSeekBarListener() {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -95,7 +89,6 @@ public class HabitDetailActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // Ничего не делаем
             }
 
             @Override
@@ -114,7 +107,6 @@ public class HabitDetailActivity extends AppCompatActivity {
         });
     }
 
-    // --- Остальной код для меню остается без изменений ---
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_detail_habit, menu);

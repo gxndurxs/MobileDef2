@@ -10,10 +10,9 @@ public class HabitEntity {
 
     public String name;
     public String description;
-    public String deadline;  // <-- ДОБАВЛЕНО
-    public int progress;     // <-- ДОБАВЛЕНО
+    public String deadline;
+    public int progress;
 
-    // Обновляем конструктор, чтобы он принимал все поля
     public HabitEntity(String name, String description, String deadline, int progress) {
         this.name = name;
         this.description = description;

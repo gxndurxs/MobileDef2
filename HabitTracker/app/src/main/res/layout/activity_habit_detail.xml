@@ -73,7 +73,6 @@
         app:layout_constraintStart_toStartOf="@id/textViewDetailName"
         app:layout_constraintTop_toBottomOf="@id/textViewDetailDeadlineLabel" />
 
-    <!-- НОВЫЙ TextView для отображения процентов -->
     <TextView
         android:id="@+id/textViewProgressValue"
         android:layout_width="wrap_content"
@@ -98,7 +97,6 @@
         app:layout_constraintTop_toBottomOf="@id/textViewProgressLabel"
         tools:progress="75" />
 
-    <!-- НОВЫЙ SeekBar (ползунок) для изменения прогресса -->
     <SeekBar
         android:id="@+id/seekBarProgress"
         android:layout_width="0dp"

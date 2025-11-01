@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Используем CardView для создания эффекта карточки с тенью и скругленными углами -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +11,6 @@
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
-    <!-- ConstraintLayout позволяет гибко располагать элементы относительно друг друга -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

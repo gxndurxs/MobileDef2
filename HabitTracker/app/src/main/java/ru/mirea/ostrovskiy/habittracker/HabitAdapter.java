@@ -15,8 +15,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitViewHol
 
     private List<Habit> habits = new ArrayList<>();
 
-    // --- НАЧАЛО: Добавляем обработчик кликов ---
-    // Это стандартный способ сделать элементы списка кликабельными.
     public interface OnHabitClickListener {
         void onHabitClick(Habit habit);
     }
@@ -26,7 +24,6 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitViewHol
     public void setOnHabitClickListener(OnHabitClickListener listener) {
         this.onHabitClickListener = listener;
     }
-    // --- КОНЕЦ: Добавляем обработчик кликов ---
 
 
     public void setHabits(List<Habit> habits) {
@@ -45,10 +42,9 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitViewHol
     public void onBindViewHolder(@NonNull HabitViewHolder holder, int position) {
         Habit habit = habits.get(position);
         holder.textViewHabitName.setText(habit.getName());
-        holder.textViewDeadline.setText(habit.getDeadline()); // <-- Устанавливаем дедлайн
-        holder.progressBarHabit.setProgress(habit.getProgress()); // <-- Устанавливаем прогресс
+        holder.textViewDeadline.setText(habit.getDeadline());
+        holder.progressBarHabit.setProgress(habit.getProgress());
 
-        // --- Устанавливаем слушатель клика на весь элемент списка ---
         holder.itemView.setOnClickListener(v -> {
             if (onHabitClickListener != null) {
                 onHabitClickListener.onHabitClick(habit);
@@ -63,14 +59,14 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitViewHol
 
     static class HabitViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewHabitName;
-        private final TextView textViewDeadline; // <-- НОВОЕ ПОЛЕ
-        private final ProgressBar progressBarHabit; // <-- НОВОЕ ПОЛЕ
+        private final TextView textViewDeadline;
+        private final ProgressBar progressBarHabit;
 
         public HabitViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewHabitName = itemView.findViewById(R.id.textViewHabitName);
-            textViewDeadline = itemView.findViewById(R.id.textViewDeadline); // <-- Находим по ID
-            progressBarHabit = itemView.findViewById(R.id.progressBarHabit); // <-- Находим по ID
+            textViewDeadline = itemView.findViewById(R.id.textViewDeadline);
+            progressBarHabit = itemView.findViewById(R.id.progressBarHabit);
         }
     }
 }

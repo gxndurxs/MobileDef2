@@ -20,7 +20,7 @@ public class HabitEditActivity extends AppCompatActivity {
     private TextInputEditText editTextDeadline;
 
     private HabitRepository habitRepository;
-    private Habit currentHabit; // Поле для хранения редактируемой привычки
+    private Habit currentHabit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +35,7 @@ public class HabitEditActivity extends AppCompatActivity {
         editTextDescription = findViewById(R.id.editTextHabitDescription);
         editTextDeadline = findViewById(R.id.editTextHabitDeadline);
 
-        // --- ЛОГИКА РЕЖИМОВ "СОЗДАНИЕ/РЕДАКТИРОВАНИЕ" ---
         if (getIntent().hasExtra("HABIT_ID")) {
-            // РЕЖИМ РЕДАКТИРОВАНИЯ
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle("Редактировать привычку");
             }
@@ -53,7 +51,6 @@ public class HabitEditActivity extends AppCompatActivity {
             editTextDescription.setText(currentHabit.getDescription());
             editTextDeadline.setText(currentHabit.getDeadline());
         } else {
-            // РЕЖИМ СОЗДАНИЯ
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle("Новая привычка");
             }
@@ -94,16 +91,14 @@ public class HabitEditActivity extends AppCompatActivity {
         }
 
         if (currentHabit != null) {
-            // ОБНОВЛЯЕМ существующую привычку
             Habit updatedHabit = new Habit(currentHabit.getId(), name, description, deadline, currentHabit.getProgress());
             habitRepository.updateHabit(updatedHabit);
             Toast.makeText(this, "Привычка обновлена", Toast.LENGTH_SHORT).show();
         } else {
-            // СОЗДАЕМ новую привычку
             Habit newHabit = new Habit(0, name, description, deadline, 0);
             habitRepository.addHabit(newHabit);
             Toast.makeText(this, "Привычка сохранена", Toast.LENGTH_SHORT).show();
         }
-        finish(); // Закрываем экран после сохранения
+        finish();
     }
 }
