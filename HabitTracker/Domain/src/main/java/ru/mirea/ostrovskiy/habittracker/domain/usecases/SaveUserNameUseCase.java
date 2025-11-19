@@ -9,7 +9,7 @@ public class SaveUserNameUseCase {
         this.habitRepository = habitRepository;
     }
 
-    public void execute(String name) {
-        habitRepository.saveUserName(name);
+    public void execute(String email, String firstName, String lastName) {
+        habitRepository.saveInitialUserData(email, firstName, lastName);
     }
 }

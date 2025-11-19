@@ -3,7 +3,7 @@ package ru.mirea.ostrovskiy.habittracker;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar; // <-- НОВЫЙ ИМПОРТ
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,17 +14,15 @@ import ru.mirea.ostrovskiy.habittracker.domain.models.Habit;
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.HabitViewHolder> {
 
     private List<Habit> habits = new ArrayList<>();
+    private OnHabitClickListener onHabitClickListener;
 
     public interface OnHabitClickListener {
         void onHabitClick(Habit habit);
     }
 
-    private OnHabitClickListener onHabitClickListener;
-
     public void setOnHabitClickListener(OnHabitClickListener listener) {
         this.onHabitClickListener = listener;
     }
-
 
     public void setHabits(List<Habit> habits) {
         this.habits = habits;

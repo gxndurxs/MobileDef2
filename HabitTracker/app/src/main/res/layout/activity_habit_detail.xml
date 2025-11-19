@@ -17,17 +17,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageViewDetail"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:srcCompat="@mipmap/ic_launcher_round" />
+
     <TextView
         android:id="@+id/textViewDetailName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imageViewDetail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         tools:text="Название привычки" />
@@ -38,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/textViewDetailName"
+        app:layout_constraintEnd_toEndOf="@id/imageViewDetail"
         app:layout_constraintStart_toStartOf="@id/textViewDetailName"
         app:layout_constraintTop_toBottomOf="@id/textViewDetailName"
         tools:text="Очень длинное и подробное описание того, что именно нужно делать в рамках этой привычки, чтобы достичь успеха." />
@@ -92,7 +102,7 @@
         android:layout_height="16dp"
         android:layout_marginTop="8dp"
         android:max="100"
-        app:layout_constraintEnd_toEndOf="@id/textViewDetailName"
+        app:layout_constraintEnd_toEndOf="@id/imageViewDetail"
         app:layout_constraintStart_toStartOf="@id/textViewDetailName"
         app:layout_constraintTop_toBottomOf="@id/textViewProgressLabel"
         tools:progress="75" />
@@ -103,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:max="100"
-        app:layout_constraintEnd_toEndOf="@id/textViewDetailName"
+        app:layout_constraintEnd_toEndOf="@id/imageViewDetail"
         app:layout_constraintStart_toStartOf="@id/textViewDetailName"
         app:layout_constraintTop_toBottomOf="@id/progressBarDetail"
         tools:progress="75" />

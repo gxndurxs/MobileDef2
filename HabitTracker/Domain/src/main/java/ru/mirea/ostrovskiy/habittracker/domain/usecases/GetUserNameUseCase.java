@@ -10,6 +10,18 @@ public class GetUserNameUseCase {
     }
 
     public String execute() {
-        return habitRepository.getUserName();
+        if (habitRepository.isGuest()) {
+            return "Гость";
+        }
+
+        String[] userProfile = habitRepository.getUserProfile();
+        String firstName = userProfile[1];
+        String lastName = userProfile[2];
+
+        if (firstName != null && !firstName.isEmpty() && !firstName.equals("Пользователь")) {
+            return firstName + " " + lastName;
+        } else {
+            return userProfile[0];
+        }
     }
 }

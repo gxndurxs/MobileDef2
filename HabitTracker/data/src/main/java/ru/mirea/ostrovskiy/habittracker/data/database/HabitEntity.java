@@ -7,13 +7,14 @@ import androidx.room.PrimaryKey;
 public class HabitEntity {
     @PrimaryKey(autoGenerate = true)
     public int id;
-
+    public String userId;
     public String name;
     public String description;
     public String deadline;
     public int progress;
 
-    public HabitEntity(String name, String description, String deadline, int progress) {
+    public HabitEntity(String userId, String name, String description, String deadline, int progress) {
+        this.userId = userId;
         this.name = name;
         this.description = description;
         this.deadline = deadline;

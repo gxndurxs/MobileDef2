@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp"
     tools:context=".AuthActivity">
 
@@ -36,5 +36,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Зарегистрироваться" />
+
+    <Button
+        android:id="@+id/buttonGuest"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Продолжить как гость" />
 
 </LinearLayout>

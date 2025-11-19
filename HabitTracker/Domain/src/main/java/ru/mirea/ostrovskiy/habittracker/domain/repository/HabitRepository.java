@@ -5,18 +5,19 @@ import ru.mirea.ostrovskiy.habittracker.domain.models.Habit;
 import ru.mirea.ostrovskiy.habittracker.domain.usecases.GetWeatherUseCase;
 
 public interface HabitRepository {
-
     interface HabitCallback {
         void onHabitsLoaded(List<Habit> habits);
         void onError(String message);
     }
-
     void getHabits(HabitCallback callback);
     void addHabit(Habit habit);
     void updateHabit(Habit habit);
     void deleteHabit(Habit habit);
-
-    void saveUserName(String name);
-    String getUserName();
+    void saveInitialUserData(String email, String firstName, String lastName);
+    String[] getUserProfile();
+    void saveUserProfile(String firstName, String lastName);
+    void setGuestStatus(boolean isGuest);
+    boolean isGuest();
+    void clearLocalDataOnLogout();
     void getWeather(String city, GetWeatherUseCase.WeatherCallback callback);
 }
